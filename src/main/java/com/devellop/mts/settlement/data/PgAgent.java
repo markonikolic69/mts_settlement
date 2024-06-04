@@ -84,7 +84,7 @@ public class PgAgent {
 		logger.debug("--> createSettlementFile, from = " + from + ", to = " + to);
 		String query = "select substring(msisdn from 2) as msisdn, amount * 100 as amount, '"+transaction_prefix+"' || TO_CHAR(platform_transaction_id, 'fm00000000000') as tr_id,"
 				+ " stop_time, '"+sn_prefix+"' || serial_number as sn from payment p JOIN transaction t on t.id = p.transaction_id JOIN post po on po.id = t.post_id "
-				+ "where t.status_id = 2 and mob_network_id = 1 and stop_time > '"+from+"' and stop_time < '"+to+"' order by t.id";
+				+ "where t.status_id in ( 2, 4, 10 ) and mob_network_id = 1 and stop_time > '"+from+"' and stop_time < '"+to+"' order by t.id";
 
 		logger.info("query = " + query);
 
@@ -113,7 +113,7 @@ public class PgAgent {
 		logger.debug("--> createSettlementFile, from = " + from + ", to = " + to);
 		String query = "select substring(msisdn from 2) as msisdn, amount * 100 as amount, '"+transaction_prefix+"' || TO_CHAR(platform_transaction_id, 'fm00000000000') as tr_id,"
 				+ " stop_time, '"+sn_prefix+"' || serial_number as sn from payment p JOIN transaction t on t.id = p.transaction_id JOIN post po on po.id = t.post_id "
-				+ "where t.status_id = 2 and mob_network_id = 1 and stop_time > '"+from+"' and stop_time < '"+to+"' order by t.id";
+				+ "where t.status_id in ( 2, 4, 10 ) and mob_network_id = 1 and stop_time > '"+from+"' and stop_time < '"+to+"' order by t.id";
 
 		logger.info("query = " + query);
 
@@ -142,7 +142,7 @@ public class PgAgent {
 		logger.debug("--> createSettlementFile, from = " + from + ", to = " + to);
 		String query = "select substring(msisdn from 2) as msisdn, amount * 100 as amount, '"+transaction_prefix+"' || TO_CHAR(platform_transaction_id, 'fm00000000000') as tr_id,"
 				+ " stop_time, '"+sn_prefix+"' || serial_number as sn from payment p JOIN transaction t on t.id = p.transaction_id JOIN post po on po.id = t.post_id "
-				+ "where t.status_id = 2 and mob_network_id = 1 and stop_time > '"+from+"' and stop_time < '"+to+"' order by t.id";
+				+ "where t.status_id in ( 2, 4, 10 ) and mob_network_id = 1 and stop_time > '"+from+"' and stop_time < '"+to+"' order by t.id";
 
 		logger.info("query = " + query);
 

@@ -18,7 +18,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_251\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\38164\AppData\Local\Temp\surefire2641630538220911408\surefirebooter2138281536808164059.jar C:\Users\38164\AppData\Local\Temp\surefire2641630538220911408 2024-06-03T14-40-28_975-jvmRun1 surefire4448971544312696288tmp surefire_0140067947016872810tmp"/>
+    <property name="sun.java.command" value="C:\Users\38164\AppData\Local\Temp\surefire4647280125478076604\surefirebooter1025308008347558672.jar C:\Users\38164\AppData\Local\Temp\surefire4647280125478076604 2024-06-04T10-20-58_446-jvmRun1 surefire4741181079654633268tmp surefire_07494452549339599243tmp"/>
     <property name="surefire.test.class.path" value="C:\Users\38164\eclipse-workspace\mts.settlement\target\test-classes;C:\Users\38164\eclipse-workspace\mts.settlement\target\classes;C:\Users\38164\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;C:\Users\38164\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\38164\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\38164\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\38164\.m2\repository\commons-net\commons-net\3.10.0\commons-net-3.10.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\38164"/>
@@ -31,7 +31,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\38164\AppData\Local\Temp\surefire2641630538220911408\surefirebooter2138281536808164059.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\38164\AppData\Local\Temp\surefire4647280125478076604\surefirebooter1025308008347558672.jar"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_251\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_251\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_251\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_251\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_251\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_251\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_251\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_251\jre\classes"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
