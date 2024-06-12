@@ -15,6 +15,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.devellop.mts.settlement.data.PgAgent;
 import com.devellop.mts.settlement.util.FTPUtil;
+import com.devellop.mts.settlement.util.MailUtil;
 
 /**
  * Hello world!
@@ -94,13 +95,19 @@ public class App
 
 
 	public void doIt() {
-		if(_operation.equals("centrosinergija")) {
-			doCentrosinergijaUpload();
-		}else {
-			if(_operation.equals("upload")) {
-				doUpload();
+		if(_operation.equals("stampa_mail")) {
+			doStampaTransactionFileMail();
+		}
+		else{
+			if(_operation.equals("centrosinergija")) {
+
+				doCentrosinergijaUpload();
 			}else {
-				doDownload();
+				if(_operation.equals("upload")) {
+					doUpload();
+				}else {
+					doDownload();
+				}
 			}
 		}
 
@@ -157,6 +164,34 @@ public class App
 					_properties.getProperty("ftp.password"), _properties.getProperty("ftp.download.dir.remote") , 
 					_properties.getProperty("ftp.download.dir.local") ).download(file_name.replace("<from>", from_suffix));
 
+		} catch (Exception fnfe) {
+			if (logger.isDebugEnabled()) {
+				logger.error("'FileNotFound' exception caught while trying to open application property file - " +
+						fnfe.getMessage());
+			}
+		}
+	}
+	
+	public void doStampaTransactionFileMail() {
+		try {
+
+			String file_name = _properties.getProperty("stampa.transactions.file.name");
+			Calendar today = Calendar.getInstance();
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+			String to = sdf1.format(today.getTime());
+			today.add(Calendar.DAY_OF_YEAR, -1);
+			String from = sdf1.format(today.getTime());
+			if(_properties.getProperty("settlement.from") != null) {
+				from = _properties.getProperty("settlement.from");
+			}
+			if(_properties.getProperty("settlement.to") != null) {
+				to = _properties.getProperty("settlement.to");
+			}
+			String from_suffix = from.replace("-", "");
+			file_name = file_name.replace("<from>", from_suffix);
+			new PgAgent(_properties).createTransactionFileForStampa(from, to, file_name);
+
+			new MailUtil().sendStampaTransaction("U prilogu", "no-reply@devellop.com", "Prepaid transakcije za " + from, new File(file_name));
 		} catch (Exception fnfe) {
 			if (logger.isDebugEnabled()) {
 				logger.error("'FileNotFound' exception caught while trying to open application property file - " +

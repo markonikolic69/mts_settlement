@@ -167,6 +167,64 @@ public class PgAgent {
 
 	}
 	
+	
+	public void createTransactionFileForStampa(String from, String to, String file_name) throws SQLException, DatabaseException, IOException{
+		logger.debug("--> createSettlementFile, from = " + from + ", to = " + to);
+		String query = "select msisdn, "
+				+ "case when mob_network_id = 1 then '186' || TO_CHAR(platform_transaction_id, 'fm00000000000') "
+				+ "when mob_network_id = 2 then '222' || TO_CHAR(platform_transaction_id, 'fm00000000000') "
+				+ "when mob_network_id = 4 then '333' || TO_CHAR(platform_transaction_id, 'fm00000000000') "
+				+ "else '555' || TO_CHAR(platform_transaction_id, 'fm00000000000') end "
+				+ "as transaction_id, "
+				+ "case when status_id = 2 then 'OK' "
+				+ "when status_id in (4,10) then 'Storno' "
+				+ "else 'NOK' end "
+				+ "as  status_id, "
+				+ "case when mob_network_id = 1 then 'M'  "
+				+ "when mob_network_id = 2 then 'Y' "
+				+ "when mob_network_id = 4 then 'A' "
+				+ "else 'G' end as mob_operater ,  amount, stop_time, 'Standard' as type, serial_number "
+				+ "from transaction t "
+				+ "JOIN payment p on p.transaction_id = t.id "
+				+ "JOIN post po on po.id = t.post_id where "
+				+ "stop_time > '"+ from +"' and stop_time < '"+to+"' and status_id in (2,4,10)";
+		
+		//telekom prefix - 18600
+		//yettel prefix - 22200
+		//A1 prefix - 33300
+		//Globaltel - 55500
+
+		logger.info("query = " + query);
+
+		PreparedStatement ps = connection.prepareStatement(query);
+
+
+		ResultSet rs = ps.executeQuery();
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new FileWriter(file_name, true));
+			while(rs.next()) {
+
+				writer.write(
+						rs.getString("transaction_id") + "," + 
+						rs.getString("stop_time") + "," + 
+						rs.getString("mob_operater") + "," + 
+						rs.getString("serial_number")  + "," + 
+						rs.getString("msisdn") + "," + 
+						rs.getString("amount") + "," + 
+						rs.getString("status_id") + "," + 
+						rs.getString("type")
+						+ "\n");
+
+			}
+
+
+		}finally{
+			if(writer != null)writer.close();
+		}
+
+	}
+	
 	public static void main(String[] args) throws Exception{
 		PropertyConfigurator.configure("log4j.properties");
 		
@@ -179,12 +237,12 @@ public class PgAgent {
             //setISPProperties(properties);
             stream.close();
             
-            String file_name = properties.getProperty("settlemt.file.name");
-            String from = "2024-05-28";
+            String file_name = properties.getProperty("stampa.transactions.file.name");
+            String from = "2024-06-11";
             from = from.replace("-", "");
             file_name = file_name.replace("<from>", from);
-            new PgAgent(properties).createSettlementFile("2024-05-28", "2024-05-29", properties.getProperty("transaction.prefix"), 
-            		properties.getProperty("serial.number.prefix"), file_name);
+            new PgAgent(properties).createTransactionFileForStampa("2024-06-11", "2024-06-12", 
+            		 file_name);
         } catch (Exception fnfe) {
             if (logger.isDebugEnabled()) {
                 logger.error("'FileNotFound' exception caught while trying to open application property file - " +
